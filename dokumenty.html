@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dok.css">
+    <title>Portfolio</title>
+</head>
+<body>
+    <header>
+        <div id="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">O MNIE</a></li>
+                <li><a href="projekty.html">PROJEKTY</a></li>
+                <li><a href="oferta.html">OFERTA</a></li>
+                <li><a href="dokumenty.html">DOKUMENTY</a></li>
+                <li><a href="kontakt.html">KONTAKT</a></li>
+            </ul>
+        </nav>
+        <div class="language-selector">
+            <a href="?lang=pl"><img src="polska.png" alt="PL" title="Polski"></a>
+            <a href="?lang=en"><img src="angileski.png" alt="EN" title="English"></a>
+            <a href="?lang=de"><img src="niemiecki.png" alt="DE" title="Deutsch"></a>
+        </div>
+    </header>
+
+    <section id="about-section">
+        <div class="container">
+            <div class="box">
+                <div class="overlay">
+                    <p>Opis dokumentu</p>
+                </div>
+                <img src="zdjecie.png.jpg">
+            </div>
+            <div class="box">
+                <div class="overlay">
+                    <p>Opis dokumentu</p>
+                </div>
+                <img src="zdjecie.png.jpg">
+            </div>
+            <div class="box">
+                <div class="overlay">
+                    <p>Opis dokumentu</p>
+                </div>
+                <img src="zdjecie.png.jpg">
+            </div>
+            <div class="box">
+                <div class="overlay">
+                    <p>Opis dokumentu</p>
+                </div>
+                <img src="zdjecie.png.jpg">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Nazwa Strony. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.language-selector a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var lang = this.querySelector('img').alt;
+                alert('Language changed to: ' + lang);
+            });
+        });
+    </script>  
+</body>
+</html>

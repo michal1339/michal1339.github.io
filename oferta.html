@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cena.css">
+    <title>Portfolio</title>
+</head>
+<body>
+    <header>
+        <div id="logo"></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">O MNIE</a></li>
+                <li><a href="projekty.html">PROJEKTY</a></li>
+                <li><a href="oferta.html">OFERTA</a></li>
+                <li><a href="dokumenty.html">DOKUMENTY</a></li>
+                <li><a href="kontakt.html">KONTAKT</a></li>
+            </ul>
+        </nav>
+        <div class="language-selector">
+            <a href="?lang=pl"><img src="polska.png" alt="PL" title="Polski"></a>
+            <a href="?lang=en"><img src="angileski.png" alt="EN" title="English"></a>
+            <a href="?lang=de"><img src="niemiecki.png" alt="DE" title="Deutsch"></a>
+        </div>
+    </header>
+
+    <section id="service-calculator">
+        <h2>Kalkulator kosztów usług</h2>
+        <p>Żeby ustalić ile godzin zajmie mi zrobienie danej usługi proszę o bezpośredni kontakt w zakładce "Kontakt".</p>
+        <div id="services">
+            <div class="service-item">
+                <div class="service-header">
+                    <h3>Usługa 1</h3>
+                </div>
+                <label for="service">Wybór usługi:</label>
+                <select class="service" name="service" onchange="updateDescription(this)">
+                    <option value="">Brak wybranej usługi</option>
+                    <option value="webdesign">Projektowanie stron internetowych</option>
+                    <option value="grafika">Tworzenie grafiki i materiałów marketingowych</option>
+                    <option value="aplikacje-mobilne">Tworzenie Aplikacji Mobilnych</option>
+                </select>
+                <br>
+                <label for="hours">Czas (godziny):</label>
+                <input type="number" class="hours" name="hours" step="0.25" placeholder="Wpisz czas w godzinach" required>
+                <br>
+                <label for="rate">Stawka za godzinę:</label>
+                <span class="hourly-rate"></span>
+                <br>
+                <p class="description"></p>
+                <button type="button" class="remove-service" onclick="removeService(this)">Usuń usługę</button>
+                <p class="remove-message" style="color: red;"></p>
+            </div>
+        </div>
+        <button type="button" id="add-service" onclick="addService()">Dodaj usługę</button>
+        <div id="total-cost"></div>
+        <button type="button" onclick="calculateServiceCost()">Oblicz</button>
+        <p id="max-services-message"></p>
+        <br>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Nazwa Strony. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.language-selector a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var lang = this.querySelector('img').alt;
+                alert('Zmieniono język na: ' + lang);
+            });
+        });
+
+        var maxServices = 3;
+        var nextServiceNumber = 2;
+
+        function addService() {
+            var servicesContainer = document.getElementById('services');
+            var serviceItems = document.querySelectorAll('.service-item');
+
+            if (serviceItems.length < maxServices) {
+                var serviceItem = document.querySelector('.service-item').cloneNode(true);
+                serviceItem.querySelector('.hours').value = '';
+                servicesContainer.appendChild(serviceItem);
+                var serviceHeader = serviceItem.querySelector('.service-header h3');
+                serviceHeader.innerText = 'Usługa ' + nextServiceNumber;
+                var removeButton = serviceItem.querySelector('.remove-service');
+                removeButton.addEventListener('click', function() {
+                    removeService(this);
+                });
+                nextServiceNumber++;
+            } else {
+                var maxServicesMessage = document.getElementById('max-services-message');
+                maxServicesMessage.innerText = 'Osiągnięto maksymalną liczbę dostępnych usług.';
+            }
+        }
+
+        function removeService(button) {
+            var serviceItem = button.parentNode;
+            var servicesContainer = serviceItem.parentNode;
+
+            if (servicesContainer.childElementCount > 1) {
+                serviceItem.remove();
+                updateServiceNumbers();
+                document.querySelector('.remove-message').innerText = '';
+            } else {
+                document.querySelector('.remove-message').innerText = 'Nie można usunąć usługi, ponieważ nie wybrałeś żadnej!';
+            }
+        }
+
+        function updateServiceNumbers() {
+            var serviceItems = document.querySelectorAll('.service-item');
+            for (var i = 0; i < serviceItems.length; i++) {
+                var serviceHeader = serviceItems[i].querySelector('.service-header h3');
+                serviceHeader.innerText = 'Usługa ' + (i + 1);
+            }
+        }
+
+        function calculateServiceCost() {
+            var serviceItems = document.querySelectorAll('.service-item');
+            var totalCost = 0;
+            var totalHours = 0;
+
+            serviceItems.forEach(function(serviceItem) {
+                var serviceSelect = serviceItem.querySelector('.service');
+                var hoursInput = serviceItem.querySelector('.hours');
+                var rateSpan = serviceItem.querySelector('.hourly-rate');
+                var description = serviceItem.querySelector('.description');
+                var service = serviceSelect.value;
+                var hours = parseFloat(hoursInput.value);
+                var rate = 0;
+
+                switch (service) {
+                    case 'webdesign':
+                        rate = 50;
+                        description.innerText = 'Opis usługi Projektowanie stron internetowych: Tworzenie responsywnych, estetycznych i funkcjonalnych projektów stron internetowych dostosowanych do potrzeb klientów. Projektowanie interfejsów użytkownika (UI) i doświadczeń użytkownika (UX), które są intuicyjne i atrakcyjne dla odwiedzających. Integracja różnych elementów, takich jak formularze kontaktowe, galerie zdjęć, mapy Google itp. Optymalizacja stron pod kątem wydajności i pozycjonowania w wynikach wyszukiwarek (SEO).';
+                        break;
+                    case 'grafika':
+                        rate = 100;
+                        description.innerText = 'Opis usługi Tworzenie grafiki i materiałów marketingowych: Projektowanie logo i identyfikacji wizualnej dla firm. Tworzenie banerów reklamowych, broszur, ulotek i innych materiałów marketingowych. Przygotowywanie grafik do mediów społecznościowych i kampanii reklamowych online. Retuszowanie i obróbka zdjęć oraz grafik.';
+                        break;
+                    case 'aplikacje-mobilne':
+                        rate = 120;
+                        description.innerText = 'Opis usługi Tworzenie Aplikacji Mobilnych: Projektowanie i rozwijanie aplikacji mobilnych na platformy iOS i Android. Tworzenie interaktywnych i funkcjonalnych aplikacji dostosowanych do potrzeb klientów. Optymalizacja aplikacji pod kątem wydajności, responsywności i użyteczności. Zapewnienie integracji z różnymi usługami i bazami danych, jeśli to konieczne.';
+                        break;
+                    default:
+                        rate = 0;
+                        description.innerText = '';
+                }
+
+                var cost = hours * rate;
+                totalCost += cost;
+                totalHours += hours;
+                rateSpan.innerText = rate + ' zł/godz';
+            });
+
+            var totalCostText = `Całkowity koszt usług: ${totalCost.toFixed(2)} zł, Łączna ilość godzin: ${totalHours.toFixed(2)}`;
+            document.getElementById('total-cost').innerText = totalCostText;
+        }
+
+        function updateDescription(select) {
+            var selectedService = select.value;
+            var description = select.parentNode.querySelector('.description');
+            var hourlyRateSpan = select.parentNode.querySelector('.hourly-rate');
+
+            switch (selectedService) {
+                case 'webdesign':
+                    description.innerText = 'Opis usługi Projektowanie stron internetowych: Tworzenie responsywnych, estetycznych i funkcjonalnych projektów stron internetowych dostosowanych do potrzeb klientów. Projektowanie interfejsów użytkownika (UI) i doświadczeń użytkownika (UX), które są intuicyjne i atrakcyjne dla odwiedzających. Integracja różnych elementów, takich jak formularze kontaktowe, galerie zdjęć, mapy Google itp. Optymalizacja stron pod kątem wydajności i pozycjonowania w wynikach wyszukiwarek (SEO).';
+                    hourlyRateSpan.innerText = '50 zł/godz';
+                    break;
+                case 'grafika':
+                    description.innerText = 'Opis usługi Tworzenie grafiki i materiałów marketingowych: Projektowanie logo i identyfikacji wizualnej dla firm. Tworzenie banerów reklamowych, broszur, ulotek i innych materiałów marketingowych. Przygotowywanie grafik do mediów społecznościowych i kampanii reklamowych online. Retuszowanie i obróbka zdjęć oraz grafik.';
+                    hourlyRateSpan.innerText = '100 zł/godz';
+                    break;
+                case 'aplikacje-mobilne':
+                    description.innerText = 'Opis usługi Tworzenie Aplikacji Mobilnych: Projektowanie i rozwijanie aplikacji mobilnych na platformy iOS i Android. Tworzenie interaktywnych i funkcjonalnych aplikacji dostosowanych do potrzeb klientów. Optymalizacja aplikacji pod kątem wydajności, responsywności i użyteczności. Zapewnienie integracji z różnymi usługami i bazami danych, jeśli to konieczne.';
+                    hourlyRateSpan.innerText = '120 zł/godz';
+                    break;
+                default:
+                    description.innerText = '';
+                    hourlyRateSpan.innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>

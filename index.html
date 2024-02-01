@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <title>Portfolio</title>
+</head>
+<body>
+    <header>
+        <div id="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">O MNIE</a></li>
+                <li><a href="projekty.html">PROJEKTY</a></li>
+                <li><a href="oferta.html">OFERTA</a></li>
+                <li><a href="dokumenty.html">DOKUMENTY</a></li>
+                <li><a href="kontakt.html">KONTAKT</a></li>
+            </ul>
+        </nav>
+        <div class="language-selector">
+            <a href="?lang=pl"><img src="polska.png" alt="PL" title="Polski"></a>
+            <a href="?lang=en"><img src="angileski.png" alt="EN" title="English"></a>
+            <a href="?lang=de"><img src="niemiecki.png" alt="DE" title="Deutsch"></a>
+        </div>
+    </header>
+
+    <section id="about-section">
+        <div class="about-content">
+            <div class="image">
+                <img src="dowod.jpg" alt="Zdjęcie profilowe">
+            </div>
+            <div class="text">
+                <h2>𝕆 𝕄ℕ𝕀𝔼</h2>
+                <p>
+                    Jestem studentem informatyki na CDV, co świadczy o Twoim zainteresowaniu technologią i komputerami.
+                    Twoja pasja do koszykówki pokazuje, że jesteś aktywną osobą, lubiącą ruch i rywalizację na boisku.
+                    Poza tym, uwielbiasz spędzać czas ze znajomymi, co dowodzi Twojej socjalnej natury i wartości, jakie przywiązujesz do relacji z innymi.
+                </p>
+                <button id="show-more">Więcej</button>
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <p>
+                            Mój entuzjazm do eksploracji nowych miejsc i kultur jest również godny podziwu. Podczas podróży do różnych zakątków świata zdobywam nowe doświadczenia i poznaję fascynujących ludzi, co sprawia, że moje życie jest pełne przygód i inspiracji.
+                            Nieustannie rozwijam się, ucząc się nowych umiejętności i poszerzając moją wiedzę, co dowodzi mojego poświęcenia w dążeniu do samorozwoju.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="download-button">
+            <a href="CV.pdf" download="CV" target="_blank">Pobierz CV</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Nazwa Strony. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+        const showModalButton = document.getElementById("show-more");
+        const modal = document.getElementById("modal");
+        const closeBtn = document.querySelector(".close");
+
+        showModalButton.addEventListener("click", () => {
+            modal.style.display = "block";
+        });
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        function openmenu() {
+            const menu = document.querySelector(".menu-group ul");
+            menu.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

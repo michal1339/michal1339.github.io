@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="projekt.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Portfolio</title>
+</head>
+<body>
+    <header>
+        <div id="logo">
+        </div>
+        <nav>
+          <ul>
+              <li><a href="index.html">O MNIE</a></li>
+              <li><a href="projekty.html">PROJEKTY</a></li>
+              <li><a href="oferta.html">OFERTA</a></li>
+              <li><a href="dokumenty.html">DOKUMENTY</a></li>
+              <li><a href="kontakt.html">KONTAKT</a></li>
+          </ul>
+        </nav>
+        <div class="language-selector">
+          <a href="?lang=pl"><img src="polska.png" alt="PL" title="Polski"></a>
+          <a href="?lang=en"><img src="angileski.png" alt="EN" title="English"></a>
+          <a href="?lang=de"><img src="niemiecki.png" alt="DE" title="Deutsch"></a>
+        </div>
+    </header>
+
+    <section id="image-slider">
+        <h1>Moje projekty</h1>
+        <div class="slider">
+            <img src="zdjecie1.jpeg" alt="Image 1">
+            <img src="zdjecie2.jpeg" alt="Image 2">
+            <img src="zdjecie3.jpeg" alt="Image 3">
+        </div>
+        <button id="prev-btn" class="arrow-button"><i class="fas fa-chevron-left"></i></button>
+        <button id="next-btn" class="arrow-button"><i class="fas fa-chevron-right"></i></button>       
+           
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Nazwa Strony. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+const slider = document.querySelector(".slider");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+let currentIndex = 0;
+
+const images = slider.querySelectorAll("img");
+const numImages = images.length;
+
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % numImages;
+  updateSlider();
+});
+
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + numImages) % numImages;
+  updateSlider();
+});
+
+function updateSlider() {
+  for (let i = 0; i < numImages; i++) {
+    if (i === currentIndex) {
+      images[i].style.display = "block";
+    } else {
+      images[i].style.display = "none";
+    }
+  }
+}
+
+updateSlider();
+
+    </script>
+</body>
+</html>
